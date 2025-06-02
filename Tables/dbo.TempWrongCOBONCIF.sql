@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[TempWrongCOBONCIF] (
+  [NCIFID_COBORROWER] [varchar](40) NULL
+)
+ON [PRIMARY]
+GO

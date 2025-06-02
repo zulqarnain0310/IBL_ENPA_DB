@@ -1,0 +1,3 @@
+﻿CREATE USER [DevTeam]
+  WITHOUT LOGIN
+GO

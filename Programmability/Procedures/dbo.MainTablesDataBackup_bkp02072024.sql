@@ -1,0 +1,747 @@
+﻿SET QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+create PROC [dbo].[MainTablesDataBackup_bkp02072024]
+
+AS
+
+DECLARE @TIMEKEY INT ,@Exec_Date DATE
+
+BEGIN TRY
+BEGIN TRAN
+SELECT @TIMEKEY=TimeKey,@Exec_Date=Date
+FROM IBL_ENPA_DB_LOCAL_DEV.dbo.SysDataMatrix
+WHERE CurrentStatus='C'
+--Audit 
+DELETE IBL_ENPA_STGDB.[dbo].[Procedure_Audit] 
+WHERE [SP_Name]='MainTablesDataBackup' AND [EXT_DATE]=GETDATE() AND ISNULL([Audit_Flg],0)=0
+
+INSERT INTO IBL_ENPA_STGDB.[dbo].[Procedure_Audit]
+           ([EXT_DATE] ,[Timekey] ,[SP_Name],Start_Date_Time )
+SELECT @Exec_Date,@TimeKey,'MainTablesDataBackup',GETDATE()
+
+TRUNCATE TABLE [dbo].[NPA_IntegrationDetails_Temp_EOM_Process]
+INSERT INTO [dbo].[NPA_IntegrationDetails_Temp_EOM_Process]
+(
+[NCIF_Id]
+      ,[NCIF_Changed]
+      ,[SrcSysAlt_Key]
+      ,[NCIF_EntityID]
+      ,[CustomerId]
+      ,[CustomerName]
+      ,[PAN]
+      ,[NCIF_AssetClassAlt_Key]
+      ,[NCIF_NPA_Date]
+      ,[AccountEntityID]
+      ,[CustomerACID]
+      ,[SanctionedLimit]
+      ,[DrawingPower]
+      ,[PrincipleOutstanding]
+      ,[Balance]
+      ,[Overdue]
+      ,[DPD_Overdue_Loans]
+      ,[DPD_Interest_Not_Serviced]
+      ,[DPD_Overdrawn]
+      ,[DPD_Renewals]
+      ,[MaxDPD]
+      ,[WriteOffFlag]
+      ,[Segment]
+      ,[SubSegment]
+      ,[ProductCode]
+      ,[ProductDesc]
+      ,[Settlement_Status]
+      ,[AC_AssetClassAlt_Key]
+      ,[AC_NPA_Date]
+      ,[AstClsChngByUser]
+      ,[AstClsChngDate]
+      ,[AstClsChngRemark]
+      ,[MOC_Status]
+      ,[MOC_Date]
+      ,[MOC_ReasonAlt_Key]
+      ,[MOC_AssetClassAlt_Key]
+      ,[MOC_NPA_Date]
+      ,[AuthorisationStatus]
+      ,[EffectiveFromTimeKey]
+      ,[EffectiveToTimeKey]
+      ,[CreatedBy]
+      ,[DateCreated]
+      ,[ModifiedBy]
+      ,[DateModified]
+      ,[ApprovedBy]
+      ,[DateApproved]
+      ,[MOC_Remark]
+      ,[ProductType]
+      ,[ActualOutStanding]
+      ,[MaxDPD_Type]
+      ,[ProductAlt_Key]
+      ,[AstClsAppRemark]
+      ,[MocAppRemark]
+      ,[PNPA_Status]
+      ,[PNPA_ReasonAlt_Key]
+      ,[PNPA_Date]
+      ,[ActualPrincipleOutstanding]
+      ,[UNSERVED_INTEREST]
+      ,[CUSTOMER_IDENTIFIER]
+      ,[ACCOUNT_LEVEL_CODE]
+      ,[NF_PNPA_Date]
+      ,[Remark]
+      ,[WriteOffDate]
+      ,[DbtDT]
+      ,[ErosionDT]
+      ,[FlgErosion]
+      ,[IntOverdue]
+      ,[IntAccrued]
+      ,[OtherOverdue]
+      ,[PrincOverdue]
+      ,[IsRestructured]
+      ,[IsOTS]
+      ,[IsTWO]
+      ,[IsARC_Sale]
+      ,[IsFraud]
+      ,[IsWiful]
+      ,[IsNonCooperative]
+      ,[IsSuitFiled]
+      ,[IsRFA]
+      ,[IsFITL]
+      ,[IsCentral_GovGty]
+      ,[Is_Oth_GovGty]
+      ,[BranchCode]
+      ,[FacilityType]
+      ,[SancDate]
+      ,[Region]
+      ,[State]
+      ,[Zone]
+      ,[NPA_TagDate]
+      ,[PS_NPS]
+      ,[Retail_Corpo]
+      ,[Area]
+      ,[FraudAmt]
+      ,[FraudDate]
+      ,[GovtGtyAmt]
+      ,[GtyRepudiated]
+      ,[RepudiationDate]
+      ,[OTS_Amt]
+      ,[WriteOffAmount]
+      ,[ARC_SaleDate]
+      ,[ARC_SaleAmt]
+      ,[PrincOverdueSinceDt]
+      ,[IntNotServicedDt]
+      ,[ContiExcessDt]
+      ,[ReviewDueDt]
+      ,[OtherOverdueSinceDt]
+      ,[IntOverdueSinceDt]
+      ,[SecuredFlag]
+      ,[StkStmtDate]
+      ,[SecurityValue]
+      ,[DFVAmt]
+      ,[CoverGovGur]
+      ,[CreditsinceDt]
+      ,[DegReason]
+      ,[NetBalance]
+      ,[ApprRV]
+      ,[SecuredAmt]
+      ,[UnSecuredAmt]
+      ,[ProvDFV]
+      ,[Provsecured]
+      ,[ProvUnsecured]
+      ,[ProvCoverGovGur]
+      ,[AddlProvision]
+      ,[TotalProvision]
+      ,[BankProvsecured]
+      ,[BankProvUnsecured]
+      ,[BankTotalProvision]
+      ,[RBIProvsecured]
+      ,[RBIProvUnsecured]
+      ,[RBITotalProvision]
+      ,[SMA_Dt]
+      ,[UpgDate]
+      ,[ProvisionAlt_Key]
+      ,[PNPA_Reason]
+      ,[SMA_Class]
+      ,[SMA_Reason]
+      ,[CommonMocTypeAlt_Key]
+      ,[FlgDeg]
+      ,[FlgSMA]
+      ,[FlgPNPA]
+      ,[FlgUpg]
+      ,[FlgFITL]
+      ,[FlgAbinitio]
+      ,[NPA_Days]
+      ,[AppGovGur]
+      ,[UsedRV]
+      ,[ComputedClaim]
+      ,[NPA_Reason]
+      ,[PnpaAssetClassAlt_key]
+      ,[SecApp]
+      ,[ProvPerSecured]
+      ,[ProvPerUnSecured]
+      ,[AddlProvisionPer]
+      ,[FlgINFRA]
+      ,[MOCTYPE]
+      ,[DPD_IntService]
+      ,[DPD_StockStmt]
+      ,[DPD_FinMaxType]
+      ,[DPD_PrincOverdue]
+      ,[DPD_OtherOverdueSince]
+      ,[IsPUI]
+      ,[AC_Closed_Date]
+      ,[SECTOR]
+      ,[LossDT]
+      ,[IsFunded]
+      ,[UploadFlag]
+      ,[FlgProcessing]
+      ,[DCCO_Date]
+      ,[ACMOC_ReasonAlt_Key]
+      ,[FlgMOC]
+      ,[PROJ_COMPLETION_DATE]
+      ,[OPEN_DATE]
+      ,[UploadID]
+	  ,[NatureofClassification]
+	  ,[DateofImpacting]
+	  ,[ImpactingAccountNo]
+      ,[ImpactingSourceSystemName]
+      ,[Co_borrower_impacted]
+      ,[PBos_Culprit_Impact]
+	  )
+
+SELECT [NCIF_Id]
+      ,[NCIF_Changed]
+      ,[SrcSysAlt_Key]
+      ,[NCIF_EntityID]
+      ,[CustomerId]
+      ,[CustomerName]
+      ,[PAN]
+      ,[NCIF_AssetClassAlt_Key]
+      ,[NCIF_NPA_Date]
+      ,[AccountEntityID]
+      ,[CustomerACID]
+      ,[SanctionedLimit]
+      ,[DrawingPower]
+      ,[PrincipleOutstanding]
+      ,[Balance]
+      ,[Overdue]
+      ,[DPD_Overdue_Loans]
+      ,[DPD_Interest_Not_Serviced]
+      ,[DPD_Overdrawn]
+      ,[DPD_Renewals]
+      ,[MaxDPD]
+      ,[WriteOffFlag]
+      ,[Segment]
+      ,[SubSegment]
+      ,[ProductCode]
+      ,[ProductDesc]
+      ,[Settlement_Status]
+      ,[AC_AssetClassAlt_Key]
+      ,[AC_NPA_Date]
+      ,[AstClsChngByUser]
+      ,[AstClsChngDate]
+      ,[AstClsChngRemark]
+      ,[MOC_Status]
+      ,[MOC_Date]
+      ,[MOC_ReasonAlt_Key]
+      ,[MOC_AssetClassAlt_Key]
+      ,[MOC_NPA_Date]
+      ,[AuthorisationStatus]
+      ,[EffectiveFromTimeKey]
+      ,[EffectiveToTimeKey]
+      ,[CreatedBy]
+      ,[DateCreated]
+      ,[ModifiedBy]
+      ,[DateModified]
+      ,[ApprovedBy]
+      ,[DateApproved]
+      ,[MOC_Remark]
+      ,[ProductType]
+      ,[ActualOutStanding]
+      ,[MaxDPD_Type]
+      ,[ProductAlt_Key]
+      ,[AstClsAppRemark]
+      ,[MocAppRemark]
+      ,[PNPA_Status]
+      ,[PNPA_ReasonAlt_Key]
+      ,[PNPA_Date]
+      ,[ActualPrincipleOutstanding]
+      ,[UNSERVED_INTEREST]
+      ,[CUSTOMER_IDENTIFIER]
+      ,[ACCOUNT_LEVEL_CODE]
+      ,[NF_PNPA_Date]
+      ,[Remark]
+      ,[WriteOffDate]
+      ,[DbtDT]
+      ,[ErosionDT]
+      ,[FlgErosion]
+      ,[IntOverdue]
+      ,[IntAccrued]
+      ,[OtherOverdue]
+      ,[PrincOverdue]
+      ,[IsRestructured]
+      ,[IsOTS]
+      ,[IsTWO]
+      ,[IsARC_Sale]
+      ,[IsFraud]
+      ,[IsWiful]
+      ,[IsNonCooperative]
+      ,[IsSuitFiled]
+      ,[IsRFA]
+      ,[IsFITL]
+      ,[IsCentral_GovGty]
+      ,[Is_Oth_GovGty]
+      ,[BranchCode]
+      ,[FacilityType]
+      ,[SancDate]
+      ,[Region]
+      ,[State]
+      ,[Zone]
+      ,[NPA_TagDate]
+      ,[PS_NPS]
+      ,[Retail_Corpo]
+      ,[Area]
+      ,[FraudAmt]
+      ,[FraudDate]
+      ,[GovtGtyAmt]
+      ,[GtyRepudiated]
+      ,[RepudiationDate]
+      ,[OTS_Amt]
+      ,[WriteOffAmount]
+      ,[ARC_SaleDate]
+      ,[ARC_SaleAmt]
+      ,[PrincOverdueSinceDt]
+      ,[IntNotServicedDt]
+      ,[ContiExcessDt]
+      ,[ReviewDueDt]
+      ,[OtherOverdueSinceDt]
+      ,[IntOverdueSinceDt]
+      ,[SecuredFlag]
+      ,[StkStmtDate]
+      ,[SecurityValue]
+      ,[DFVAmt]
+      ,[CoverGovGur]
+      ,[CreditsinceDt]
+      ,[DegReason]
+      ,[NetBalance]
+      ,[ApprRV]
+      ,[SecuredAmt]
+      ,[UnSecuredAmt]
+      ,[ProvDFV]
+      ,[Provsecured]
+      ,[ProvUnsecured]
+      ,[ProvCoverGovGur]
+      ,[AddlProvision]
+      ,[TotalProvision]
+      ,[BankProvsecured]
+      ,[BankProvUnsecured]
+      ,[BankTotalProvision]
+      ,[RBIProvsecured]
+      ,[RBIProvUnsecured]
+      ,[RBITotalProvision]
+      ,[SMA_Dt]
+      ,[UpgDate]
+      ,[ProvisionAlt_Key]
+      ,[PNPA_Reason]
+      ,[SMA_Class]
+      ,[SMA_Reason]
+      ,[CommonMocTypeAlt_Key]
+      ,[FlgDeg]
+      ,[FlgSMA]
+      ,[FlgPNPA]
+      ,[FlgUpg]
+      ,[FlgFITL]
+      ,[FlgAbinitio]
+      ,[NPA_Days]
+      ,[AppGovGur]
+      ,[UsedRV]
+      ,[ComputedClaim]
+      ,[NPA_Reason]
+      ,[PnpaAssetClassAlt_key]
+      ,[SecApp]
+      ,[ProvPerSecured]
+      ,[ProvPerUnSecured]
+      ,[AddlProvisionPer]
+      ,[FlgINFRA]
+      ,[MOCTYPE]
+      ,[DPD_IntService]
+      ,[DPD_StockStmt]
+      ,[DPD_FinMaxType]
+      ,[DPD_PrincOverdue]
+      ,[DPD_OtherOverdueSince]
+      ,[IsPUI]
+      ,[AC_Closed_Date]
+      ,[SECTOR]
+      ,[LossDT]
+      ,[IsFunded]
+      ,[UploadFlag]
+      ,[FlgProcessing]
+      ,[DCCO_Date]
+      ,[ACMOC_ReasonAlt_Key]
+      ,[FlgMOC]
+      ,[PROJ_COMPLETION_DATE]
+      ,[OPEN_DATE]
+      ,[UploadID]
+	  ,[NatureofClassification]
+	  ,[DateofImpacting]
+	  ,[ImpactingAccountNo]
+      ,[ImpactingSourceSystemName]
+      ,[Co_borrower_impacted]
+      ,[PBos_Culprit_Impact]
+ FROM [dbo].[NPA_IntegrationDetails]
+WHERE EffectiveFromTimeKey<=@TIMEKEY
+AND   EffectiveToTimeKey>=@TIMEKEY
+
+
+TRUNCATE TABLE [CurDat].[AdvSecurityDetail_Temp_EOM_Process]
+INSERT INTO [CurDat].[AdvSecurityDetail_Temp_EOM_Process]
+(
+AccountEntityId
+,CustomerEntityId
+,SecurityType
+,CollateralType
+,SecurityAlt_Key
+,SecurityEntityID
+,Security_RefNo
+,SecurityNature
+,SecurityChargeTypeAlt_Key
+,CurrencyAlt_Key
+,EntryType
+,ScrCrError
+,InwardNo
+,Limitnode_Flag
+,SrcSystemAlt_Key
+,RefCustomerId
+,RefSystemAcId
+,AuthorisationStatus
+,EffectiveFromTimeKey
+,EffectiveToTimeKey
+,CreatedBy
+,DateCreated
+,ModifiedBy
+,DateModified
+,ApprovedBy
+,DateApproved
+,MocTypeAlt_Key
+,MocStatus
+,MocDate
+,SecurityParticular
+,OwnerTypeAlt_Key
+,AssetOwnerName
+,ValueAtSanctionTime
+,BranchLastInspecDate
+,SatisfactionNo
+,SatisfactionDate
+,BankShare
+,ActionTakenRemark
+,SecCharge
+,CollateralID
+,UCICID
+,CustomerName
+,TaggingAlt_Key
+,DistributionAlt_Key
+,CollateralCode
+,CollateralSubTypeAlt_Key
+,CollateralOwnerShipTypeAlt_Key
+,ChargeNatureAlt_Key
+,ShareAvailabletoBankAlt_Key
+,CollateralShareamount
+,IfPercentagevalue_or_Absolutevalue
+,CollateralValueatSanctioninRs
+,CollateralValueasonNPAdateinRs
+,ApprovedByFirstLevel
+,DateApprovedFirstLevel
+,ChangeField
+,RefCustomer_CIF
+,COLL_DELINK_DATE
+)
+SELECT 
+AccountEntityId
+,CustomerEntityId
+,SecurityType
+,CollateralType
+,SecurityAlt_Key
+,SecurityEntityID
+,Security_RefNo
+,SecurityNature
+,SecurityChargeTypeAlt_Key
+,CurrencyAlt_Key
+,EntryType
+,ScrCrError
+,InwardNo
+,Limitnode_Flag
+,SrcSystemAlt_Key
+,RefCustomerId
+,RefSystemAcId
+,AuthorisationStatus
+,EffectiveFromTimeKey
+,EffectiveToTimeKey
+,CreatedBy
+,DateCreated
+,ModifiedBy
+,DateModified
+,ApprovedBy
+,DateApproved
+,MocTypeAlt_Key
+,MocStatus
+,MocDate
+,SecurityParticular
+,OwnerTypeAlt_Key
+,AssetOwnerName
+,ValueAtSanctionTime
+,BranchLastInspecDate
+,SatisfactionNo
+,SatisfactionDate
+,BankShare
+,ActionTakenRemark
+,SecCharge
+,CollateralID
+,UCICID
+,CustomerName
+,TaggingAlt_Key
+,DistributionAlt_Key
+,CollateralCode
+,CollateralSubTypeAlt_Key
+,CollateralOwnerShipTypeAlt_Key
+,ChargeNatureAlt_Key
+,ShareAvailabletoBankAlt_Key
+,CollateralShareamount
+,IfPercentagevalue_or_Absolutevalue
+,CollateralValueatSanctioninRs
+,CollateralValueasonNPAdateinRs
+,ApprovedByFirstLevel
+,DateApprovedFirstLevel
+,ChangeField
+,RefCustomer_CIF
+,COLL_DELINK_DATE
+FROM [CurDat].[AdvSecurityDetail]
+WHERE EffectiveFromTimeKey<=@TIMEKEY
+AND   EffectiveToTimeKey>=@TIMEKEY
+
+TRUNCATE TABLE [CurDat].[AdvSecurityValueDetail_Temp_EOM_Process]
+INSERT INTO [CurDat].[AdvSecurityValueDetail_Temp_EOM_Process]
+(
+SecurityEntityID
+,ValuationSourceAlt_Key
+,Prev_ValuationDate
+,Prev_Value
+,ValuationDate
+,CurrentValue
+,ValuationExpiryDate
+,AuthorisationStatus
+,EffectiveFromTimeKey
+,EffectiveToTimeKey
+,CreatedBy
+,DateCreated
+,ModifiedBy
+,DateModified
+,ApprovedBy
+,DateApproved
+,CurrentValueSource
+,CollateralValueatthetimeoflastreviewinRs
+,CollateralID
+,ExpiryBusinessRule
+,Periodinmonth
+)
+SELECT SecurityEntityID
+,ValuationSourceAlt_Key
+,Prev_ValuationDate
+,Prev_Value
+,ValuationDate
+,CurrentValue
+,ValuationExpiryDate
+,AuthorisationStatus
+,EffectiveFromTimeKey
+,EffectiveToTimeKey
+,CreatedBy
+,DateCreated
+,ModifiedBy
+,DateModified
+,ApprovedBy
+,DateApproved
+,CurrentValueSource
+,CollateralValueatthetimeoflastreviewinRs
+,CollateralID
+,ExpiryBusinessRule
+,Periodinmonth
+ FROM [CurDat].[AdvSecurityValueDetail]
+WHERE EffectiveFromTimeKey<=@TIMEKEY
+AND   EffectiveToTimeKey>=@TIMEKEY
+
+TRUNCATE TABLE [CurDat].[AdvAcRestructureDetail_Temp_EOM_Process]
+INSERT INTO [CurDat].[AdvAcRestructureDetail_Temp_EOM_Process](
+EntityKey
+,AccountEntityId
+,RestructureTypeAlt_Key
+,RestructureCatgAlt_Key
+,RestructureProposalDt
+,RestructureDt
+,RestructureAmt
+,ApprovingAuthAlt_Key
+,RestructureApprovalDt
+,RestructureSequenceRefNo
+,DiminutionAmount
+,RestructureByAlt_Key
+,RefCustomerId
+,RefSystemAcId
+,AuthorisationStatus
+,EffectiveFromTimeKey
+,EffectiveToTimeKey
+,CreatedBy
+,DateCreated
+,ModifiedBy
+,DateModified
+,ApprovedBy
+,DateApproved
+,CDRFlg
+,ExitCDRFlg
+,CutOffDate
+,RepaymentStartDate
+,RestructureReason
+,OverDueSinceDt
+,BankApprovalDt
+,ForwardDt
+,Remark
+,SDR_INVOKED
+,SDR_REFER_DATE
+,PreRestrucDefaultDate
+,PreRestrucAssetClass
+,PreRestrucNPA_Date
+,PostRestrucAssetClass
+,IntRepayStartDate
+,RefDate
+,InvocationDate
+,IsEquityCoversion
+,ConversionDate
+,Is_COVID_Morat
+,COVID_OTR_Catg
+,CRILIC_Fst_DefaultDate
+,FstDefaultReportingBank
+,ICA_SignDate
+,Is_InvestmentGrade
+,CreditProvision
+,DFVProvision
+,MTMProvision
+,RevisedBusinessSegment
+,BankingType
+,DisbursementDate
+,RestructureAssetClassAlt_key
+,RestructureDate
+,Npa_Qtr
+,RestructurePOS
+,RevisedBusSegAlt_Key
+,SP_ExpiryDate
+,FlgPUI
+,NEW_SP_PERIOD_EXP_DATE
+,RESTR_STATUS
+,POST_DEG_DEFAULT
+,POST_DEG_DEFAULT_DATE
+,DEFAULT_IN_MONITORING_PERIOD
+,POST_RESTR_UPG_DATE
+,DPD_AsOnRestr
+,SLBC_Restructuring
+,Restructure_NPA_Dt
+,RefCustomer_CIF
+,SrcSysAlt_Key
+,TEN_PC_DATE
+)
+SELECT 
+EntityKey
+,AccountEntityId
+,RestructureTypeAlt_Key
+,RestructureCatgAlt_Key
+,RestructureProposalDt
+,RestructureDt
+,RestructureAmt
+,ApprovingAuthAlt_Key
+,RestructureApprovalDt
+,RestructureSequenceRefNo
+,DiminutionAmount
+,RestructureByAlt_Key
+,RefCustomerId
+,RefSystemAcId
+,AuthorisationStatus
+,EffectiveFromTimeKey
+,EffectiveToTimeKey
+,CreatedBy
+,DateCreated
+,ModifiedBy
+,DateModified
+,ApprovedBy
+,DateApproved
+,CDRFlg
+,ExitCDRFlg
+,CutOffDate
+,RepaymentStartDate
+,RestructureReason
+,OverDueSinceDt
+,BankApprovalDt
+,ForwardDt
+,Remark
+,SDR_INVOKED
+,SDR_REFER_DATE
+,PreRestrucDefaultDate
+,PreRestrucAssetClass
+,PreRestrucNPA_Date
+,PostRestrucAssetClass
+,IntRepayStartDate
+,RefDate
+,InvocationDate
+,IsEquityCoversion
+,ConversionDate
+,Is_COVID_Morat
+,COVID_OTR_Catg
+,CRILIC_Fst_DefaultDate
+,FstDefaultReportingBank
+,ICA_SignDate
+,Is_InvestmentGrade
+,CreditProvision
+,DFVProvision
+,MTMProvision
+,RevisedBusinessSegment
+,BankingType
+,DisbursementDate
+,RestructureAssetClassAlt_key
+,RestructureDate
+,Npa_Qtr
+,RestructurePOS
+,RevisedBusSegAlt_Key
+,SP_ExpiryDate
+,FlgPUI
+,NEW_SP_PERIOD_EXP_DATE
+,RESTR_STATUS
+,POST_DEG_DEFAULT
+,POST_DEG_DEFAULT_DATE
+,DEFAULT_IN_MONITORING_PERIOD
+,POST_RESTR_UPG_DATE
+,DPD_AsOnRestr
+,SLBC_Restructuring
+,Restructure_NPA_Dt
+,RefCustomer_CIF
+,SrcSysAlt_Key
+,TEN_PC_DATE FROM [CurDat].[AdvAcRestructureDetail]
+WHERE EffectiveFromTimeKey<=@TIMEKEY
+AND   EffectiveToTimeKey>=@TIMEKEY
+
+--UPDATE Audit Flag
+UPDATE IBL_ENPA_STGDB.[dbo].[Procedure_Audit] SET End_Date_Time=GETDATE(),[Audit_Flg]=1 
+WHERE [SP_Name]='MainTablesDataBackup' AND [EXT_DATE]=@Exec_Date AND ISNULL([Audit_Flg],0)=0
+
+COMMIT TRAN
+END TRY
+BEGIN CATCH
+ DECLARE
+   @ErMessage NVARCHAR(2048),
+   @ErSeverity INT,
+   @ErState INT
+ 
+ SELECT  @ErMessage = ERROR_MESSAGE(),
+   @ErSeverity = ERROR_SEVERITY(),
+   @ErState = ERROR_STATE()
+ 
+--UPDATE Audit Flag
+UPDATE IBL_ENPA_STGDB.[dbo].[Procedure_Audit] SET  ERROR_MESSAGE=@ErMessage 
+WHERE [SP_Name]='MainTablesDataBackup' AND [EXT_DATE]=@Exec_Date AND ISNULL([Audit_Flg],0)=0
+
+ RAISERROR (@ErMessage,
+             @ErSeverity,
+             @ErState )
+
+ROLLBACK TRAN
+END CATCH
+GO

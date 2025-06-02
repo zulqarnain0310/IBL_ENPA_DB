@@ -1,0 +1,32 @@
+﻿CREATE TABLE [dbo].[COBORROWERREPORTDEGRADEINACTIVE] (
+  [SourceName] [varchar](50) NULL,
+  [SolId] [varchar](20) NULL,
+  [Segment] [varchar](100) NULL,
+  [ProductCode] [varchar](50) NULL,
+  [NCIF_Id] [varchar](100) NULL,
+  [CustomerId] [varchar](20) NULL,
+  [CustomerACID] [varchar](20) NULL,
+  [IsFunded] [char](1) NULL,
+  [CustomerName] [varchar](500) NULL,
+  [NCIF_NPA_Date] [date] NULL,
+  [AssetClassName] [varchar](50) NULL,
+  [Balance] [decimal](16, 2) NULL,
+  [IntOverdue] [decimal](16, 2) NULL,
+  [PrincipleOutstanding] [decimal](16, 2) NULL,
+  [SecurityValue] [decimal](24) NULL,
+  [SecuredAmt] [decimal](16, 2) NULL,
+  [UnSecuredAmt] [decimal](16, 2) NULL,
+  [TotalProvision] [decimal](16, 2) NULL,
+  [SecuredFlag] [varchar](1) NULL,
+  [Co_Borrower_NCIF] [varchar](40) NULL,
+  [Co_Borrower_Name] [varchar](500) NULL,
+  [Culprit_Impacted] [char](1) NULL,
+  [Co_borrower_impacted] [varchar](1) NOT NULL,
+  [PBos_Culprit_Impact] [varchar](1) NOT NULL,
+  [PBos_Culprit_ACID] [varchar](5000) NULL,
+  [ImpactingSourceSystemName] [varchar](500) NULL,
+  [Date_of_identification_of_culprit_ac] [date] NULL,
+  [RestructureDt] [date] NULL
+)
+ON [PRIMARY]
+GO

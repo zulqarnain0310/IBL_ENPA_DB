@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[DeDupSys_Data] (
+  [COREWMSMRG_MATCHID] [varchar](50) NULL
+)
+ON [PRIMARY]
+GO

@@ -1,0 +1,3 @@
+﻿CREATE USER [ReportTeam]
+  WITHOUT LOGIN
+GO

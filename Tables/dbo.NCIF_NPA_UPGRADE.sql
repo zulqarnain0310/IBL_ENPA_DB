@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[NCIF_NPA_UPGRADE] (
+  [NCIF_ID] [varchar](50) NULL
+)
+ON [PRIMARY]
+GO

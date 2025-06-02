@@ -1,0 +1,12 @@
+﻿SET QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+CREATE PROC [dbo].[NSDL_Select]
+@TimeKey   INT
+
+AS 
+
+
+
+SELECT PAN,NCIF AS ENTCIF FROM PAN_MismatchDetails
+WHERE (TimeKey=@TimeKey) AND ISNULL(InsertFlag,'N')='N'
+GO

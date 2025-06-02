@@ -1,0 +1,32 @@
+﻿CREATE TABLE [dbo].[DimPartitionTable] (
+  [PartitionTbale_Key] [smallint] NOT NULL,
+  [PartitionTbaleAlt_Key] [smallint] NULL,
+  [PartitionTbaleName] [varchar](50) NULL,
+  [PartitionFreq] [char](3) NULL,
+  [PartitionTbaleShortName] [varchar](20) NULL,
+  [PartitionTbaleShortNameEnum] [varchar](20) NULL,
+  [PartitionTbaleGroup] [varchar](50) NULL,
+  [PartitionTbaleSubGroup] [varchar](50) NULL,
+  [PartitionTbaleSegment] [varchar](50) NULL,
+  [PartitionTbaleValidCode] [char](1) NULL,
+  [SrcSysPartitionTbaleCode] [varchar](50) NULL,
+  [SrcSysPartitionTbaleName] [varchar](50) NULL,
+  [DestSysPartitionTbaleCode] [varchar](10) NULL,
+  [DestSysPartitionTbaleValidCode] [char](1) NULL,
+  [EffectiveFromTimeKey] [int] NULL,
+  [EffectiveToTimeKey] [int] NULL,
+  [CreatedBy] [varchar](20) NULL,
+  [DateCreated] [smalldatetime] NULL,
+  [ModifyBy] [varchar](20) NULL,
+  [DateModified] [smalldatetime] NULL,
+  [ApprovedBy] [varchar](20) NULL,
+  [DateApproved] [smalldatetime] NULL,
+  [D2Ktimestamp] [timestamp],
+  [UniqueColumn] [varchar](50) NULL,
+  [PriKeyBaseCol] [varchar](100) NULL,
+  [PartitionTbaleSchema] [varchar](30) NULL,
+  [ViewSchema] [varchar](20) NULL,
+  [PartitionViewName] [varchar](50) NULL
+)
+ON [PRIMARY]
+GO

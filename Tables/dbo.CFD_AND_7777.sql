@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[CFD_AND_7777] (
+  [NCIF_ID] [varchar](50) NULL
+)
+ON [PRIMARY]
+GO

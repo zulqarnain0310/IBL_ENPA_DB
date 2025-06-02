@@ -1,0 +1,33 @@
+﻿CREATE TABLE [dbo].[ECS_Stg] (
+  [SYSTEM] [varchar](50) NULL,
+  [ENTERPRISE_CIF] [varchar](50) NULL,
+  [CLIENT ID (SOURCE SYSTEM)] [varchar](50) NULL,
+  [CUSTOMER_NAME] [varchar](1500) NULL,
+  [ACCOUNT NUMBER] [varchar](50) NULL,
+  [LIMIT] [varchar](50) NULL,
+  [TOTAL OUTSTANDING] [varchar](50) NULL,
+  [PRINCIPAL  OUTSTANDING] [varchar](50) NULL,
+  [DPD] [varchar](50) NULL,
+  [CLASSIFICATION] [varchar](50) NULL,
+  [NPA DATE] [varchar](50) NULL,
+  [SETTLEMENT STATUS] [varchar](50) NULL,
+  [WRITE OFF FLAG] [varchar](50) NULL,
+  [GROUP ID] [varchar](50) NULL,
+  [GROUP CODE] [varchar](50) NULL,
+  [GROUP DESC] [varchar](50) NULL,
+  [SEGMENT] [varchar](50) NULL,
+  [SUB SEGMENT] [varchar](50) NULL,
+  [PAN] [varchar](50) MASKED WITH (FUNCTION = 'default()') NULL,
+  [AADHAR UID] [varchar](500) NULL,
+  [SCHEME TYPE] [varchar](50) NULL,
+  [SCHEME CODE  PRODUCT CODE] [varchar](50) NULL,
+  [SCHEME  PRODUCT CODE DESCRIPTION] [varchar](50) NULL,
+  [DRAWING POWER (IN INR)] [varchar](50) NULL,
+  [DPD - OVERDUE LOANS] [varchar](50) NULL,
+  [DPD - INTEREST NOT SERVICED] [varchar](50) NULL,
+  [DPD - OVERDRAWN] [varchar](50) NULL,
+  [DPD - RENEWALS] [varchar](50) NULL,
+  [OVERDUE AMOUNT] [varchar](50) NULL
+)
+ON [PRIMARY]
+GO

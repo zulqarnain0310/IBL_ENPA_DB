@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[SUNDAR_OBSERVATION_20231001] (
+  [NCIF_Id] [varchar](50) NULL,
+  [CustomerACID] [varchar](50) NULL
+)
+ON [PRIMARY]
+GO

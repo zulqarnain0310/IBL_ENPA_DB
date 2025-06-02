@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[TO_BE_CHECKED_IN_NPID] (
+  [CustomerACID] [varchar](20) NULL
+)
+ON [PRIMARY]
+GO

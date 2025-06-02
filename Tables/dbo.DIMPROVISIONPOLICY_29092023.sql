@@ -1,0 +1,30 @@
+﻿CREATE TABLE [dbo].[DIMPROVISIONPOLICY_29092023] (
+  [Source_System] [nvarchar](50) NULL,
+  [Source_Alt_Key] [int] NULL,
+  [Scheme_Code] [nvarchar](50) NULL,
+  [upto_3_months] [float] NULL,
+  [From_4_months_upto_6_months] [float] NULL,
+  [From_7_months_upto_9_months] [nvarchar](50) NULL,
+  [From_10_months_upto_12_months] [nvarchar](50) NULL,
+  [Doubtful_1] [nvarchar](50) NULL,
+  [Doubtful_2] [nvarchar](50) NULL,
+  [Doubtful_3] [nvarchar](50) NULL,
+  [Loss] [nvarchar](50) NULL,
+  [Effective_date] [nvarchar](50) NULL,
+  [AuthorisationStatus] [nvarchar](50) NULL,
+  [EffectiveFromTimeKey] [int] NULL,
+  [EffectiveToTimeKey] [int] NULL,
+  [CreatedBy] [nvarchar](50) NULL,
+  [DateCreated] [nvarchar](50) NULL,
+  [ModifiedBy] [nvarchar](50) NULL,
+  [DateModified] [nvarchar](50) NULL,
+  [ApprovedBy] [nvarchar](50) NULL,
+  [DateApproved] [nvarchar](50) NULL,
+  [D2Ktimestamp] [nvarchar](50) NULL,
+  [ApprovedByFirstLevel] [nvarchar](50) NULL,
+  [DateApprovedFirstLevel] [nvarchar](50) NULL,
+  [ProvisionAlt_key] [int] NULL,
+  [ProvisionUnSecured] [nvarchar](50) NULL
+)
+ON [PRIMARY]
+GO

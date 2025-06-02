@@ -1,0 +1,30 @@
+﻿CREATE TABLE [dbo].[DimZone] (
+  [Zone_Key] [smallint] NOT NULL,
+  [ZoneAlt_Key] [varchar](10) NOT NULL,
+  [ZoneName] [varchar](50) NULL,
+  [ZoneShortName] [varchar](20) NULL,
+  [ZoneShortNameEnum] [varchar](20) NULL,
+  [ZoneGroup] [varchar](50) NULL,
+  [ZoneSubGroup] [varchar](50) NULL,
+  [ZoneSegment] [varchar](50) NULL,
+  [ZoneValidCode] [char](1) NULL,
+  [RBI_Part_1] [varchar](7) NULL,
+  [RBI_Part_2] [varchar](7) NULL,
+  [SrcSysZoneCode] [varchar](50) NULL,
+  [SrcSysZoneName] [varchar](50) NULL,
+  [DestSysZoneCode] [varchar](10) NULL,
+  [AuthorisationStatus] [varchar](2) NULL,
+  [EffectiveFromTimeKey] [int] NULL,
+  [EffectiveToTimeKey] [int] NULL,
+  [CreatedBy] [varchar](20) NULL,
+  [DateCreated] [smalldatetime] NULL,
+  [ModifyBy] [varchar](20) NULL,
+  [DateModified] [smalldatetime] NULL,
+  [ApprovedBy] [varchar](20) NULL,
+  [DateApproved] [smalldatetime] NULL,
+  [D2Ktimestamp] [timestamp],
+  [Zonal_Head_EmailId] [varchar](200) NULL,
+  [DeputyZonal_Head_EmailId] [varchar](200) NULL
+)
+ON [PRIMARY]
+GO

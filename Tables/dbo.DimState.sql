@@ -1,0 +1,30 @@
+﻿CREATE TABLE [dbo].[DimState] (
+  [State_Key] [smallint] NOT NULL,
+  [StateAlt_Key] [smallint] NOT NULL,
+  [StateAlt2_Key] [smallint] NOT NULL,
+  [StateName] [varchar](50) NOT NULL,
+  [StateShortName] [varchar](20) NULL,
+  [StateShortNameEnum] [varchar](20) NULL,
+  [StateGroup] [varchar](50) NULL,
+  [StateSubGroup] [varchar](50) NULL,
+  [StateSegment] [varchar](50) NULL,
+  [StateValidCode] [char](1) NULL,
+  [TerritoryAlt_Key] [smallint] NULL,
+  [CreatedBy] [varchar](20) NULL,
+  [DateCreated] [smalldatetime] NULL,
+  [ModifyBy] [varchar](20) NULL,
+  [DateModified] [smalldatetime] NULL,
+  [EffectiveFromTimeKey] [int] NULL,
+  [EffectiveToTimeKey] [int] NULL,
+  [RecordStatus] [char](1) NULL,
+  [SrcSysStateCode] [varchar](50) NULL,
+  [SrcSysStateName] [varchar](50) NULL,
+  [CibilCode] [varchar](2) NULL,
+  [PINCode] [varchar](100) NULL,
+  [RBICode] [varchar](2) NULL,
+  [DestSystemStateCode] [varchar](10) NULL,
+  [CIBIL_COMM_CODE] [varchar](2) NULL,
+  [AccuStateCode] [varchar](4) NULL
+)
+ON [PRIMARY]
+GO

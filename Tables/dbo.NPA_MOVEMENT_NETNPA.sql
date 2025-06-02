@@ -1,0 +1,14 @@
+﻿CREATE TABLE [dbo].[NPA_MOVEMENT_NETNPA] (
+  [SR_NO] [varchar](5) NULL,
+  [PARTICULARS] [varchar](200) NULL,
+  [STANDARD_ADVANCES] [decimal](36, 4) NULL,
+  [SUB_STANDARD_ADVANCES] [decimal](36, 4) NULL,
+  [DOUBTFUL1_ADVANCES] [decimal](36, 4) NULL,
+  [DOUBTFUL2_ADVANCES] [decimal](36, 4) NULL,
+  [DOUBTFUL3_ADVANCES] [decimal](36, 4) NULL,
+  [LOSS_ADVANCES] [decimal](36, 4) NULL,
+  [TOTAL_NON_PERFORMING_ADVANCES] [decimal](36, 4) NULL,
+  [TOTAL] [varchar](200) NULL
+)
+ON [PRIMARY]
+GO

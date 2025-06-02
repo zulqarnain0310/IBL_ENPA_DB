@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[GANASEVA_CASES] (
+  [NCIF_ID] [varchar](50) NULL
+)
+ON [PRIMARY]
+GO

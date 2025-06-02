@@ -1,0 +1,33 @@
+﻿CREATE TABLE [dbo].[DIMPROVISIONPOLICY_Testtable] (
+  [Source System] [varchar](50) NULL,
+  [Source_Alt_Key] [int] NULL,
+  [Scheme Code] [varchar](50) NULL,
+  [upto 3 months] [decimal](18, 6) NULL,
+  [>3 months upto 6 months] [decimal](18, 6) NULL,
+  [>6 months upto 9 months] [decimal](18, 6) NULL,
+  [>9 months upto 12 months] [decimal](18, 6) NULL,
+  [Doubtful 1] [decimal](18, 6) NULL,
+  [Doubtful 2] [decimal](18, 6) NULL,
+  [Doubtful 3] [decimal](18, 6) NULL,
+  [Loss] [decimal](18, 6) NULL,
+  [Effective date] [varchar](10) NULL,
+  [Segment] [varchar](10) NULL,
+  [AuthorisationStatus] [varchar](10) NULL,
+  [EffectiveFromTimeKey] [int] NULL,
+  [EffectiveToTimeKey] [int] NULL,
+  [CreatedBy] [varchar](50) NULL,
+  [DateCreated] [datetime] NULL,
+  [ModifiedBy] [varchar](50) NULL,
+  [DateModified] [datetime] NULL,
+  [ApprovedBy] [varchar](50) NULL,
+  [DateApproved] [datetime] NULL,
+  [D2Ktimestamp] [timestamp],
+  [ApprovedByFirstLevel] [varchar](50) NULL,
+  [DateApprovedFirstLevel] [datetime] NULL,
+  [ProvisionAlt_key] [int] IDENTITY (577, 1),
+  [ProvisionUnSecured] [decimal](18, 6) NULL,
+  [UploadID] [int] NULL,
+  [IsUpload] [char](1) NULL
+)
+ON [PRIMARY]
+GO

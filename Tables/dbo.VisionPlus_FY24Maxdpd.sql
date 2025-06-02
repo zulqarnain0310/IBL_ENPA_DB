@@ -1,0 +1,33 @@
+﻿CREATE TABLE [dbo].[VisionPlus_FY24Maxdpd] (
+  [date] [date] NULL,
+  [NCIF_Id] [varchar](100) NULL,
+  [CustomerId] [varchar](20) NULL,
+  [CustomerACID] [varchar](20) NULL,
+  [MaxDPD] [int] NULL,
+  [Product] [varchar](200) NULL,
+  [SourceName] [varchar](200) NULL,
+  [Accountclosedstatus] [varchar](200) NULL,
+  [AccountOpenDate] [date] NULL,
+  [PrincOverdueSinceDt] [date] NULL,
+  [IntNotServicedDt] [date] NULL,
+  [ContiExcessDt] [date] NULL,
+  [ReviewDueDt] [date] NULL,
+  [OtherOverdueSinceDt] [date] NULL,
+  [IntOverdueSinceDt] [date] NULL,
+  [StkStmtDate] [date] NULL,
+  [NCIF_AssetClassAlt_Key] [int] NULL,
+  [balance] [decimal](18, 2) NULL,
+  [PrincipleOutstanding] [decimal](18, 2) NULL,
+  [DPD_PrincOverdue] [int] NULL,
+  [DPD_OtherOverdueSince] [int] NULL,
+  [DPD_StockStmt] [int] NULL,
+  [DPD_IntService] [int] NULL,
+  [DPD_Renewals] [int] NULL,
+  [DPD_Overdrawn] [int] NULL,
+  [DPD_Interest_Not_Serviced] [int] NULL,
+  [DPD_Overdue_Loans] [int] NULL,
+  [CustomerName] [varchar](500) NULL,
+  [Segment] [varchar](100) NULL
+)
+ON [PRIMARY]
+GO

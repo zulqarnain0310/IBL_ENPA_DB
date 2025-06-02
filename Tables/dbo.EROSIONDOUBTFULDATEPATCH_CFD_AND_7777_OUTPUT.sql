@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[EROSIONDOUBTFULDATEPATCH_CFD_AND_7777_OUTPUT] (
+  [NCIF_ID] [varchar](100) NULL,
+  [DbtDT] [date] NULL,
+  [AC_NPA_Date] [date] NULL
+)
+ON [PRIMARY]
+GO

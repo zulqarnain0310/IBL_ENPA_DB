@@ -1,0 +1,33 @@
+﻿CREATE TABLE [dbo].[MaxDPD1YearDataSankar] (
+  [UCIC] [varchar](200) NULL,
+  [customer_code] [varchar](200) NULL,
+  [Borrower_Name] [varchar](500) NULL,
+  [Loan_Account_No] [varchar](200) NULL,
+  [scheme_code] [varchar](200) NULL,
+  [customer_type] [varchar](200) NULL,
+  [system] [varchar](200) NULL,
+  [Max_DPD] [int] NULL,
+  [AccountClosedStatus] [varchar](200) NULL,
+  [date] [date] NULL,
+  [DPD_PrincOverdue] [int] NULL,
+  [DPD_OtherOverdueSince] [int] NULL,
+  [DPD_StockStmt] [int] NULL,
+  [DPD_IntService] [int] NULL,
+  [DPD_Renewals] [int] NULL,
+  [DPD_Overdrawn] [int] NULL,
+  [DPD_Interest_Not_Serviced] [int] NULL,
+  [DPD_Overdue_Loans] [int] NULL,
+  [AccountOpenDate] [date] NULL,
+  [PrincOverdueSinceDt] [date] NULL,
+  [IntNotServicedDt] [date] NULL,
+  [ContiExcessDt] [date] NULL,
+  [ReviewDueDt] [date] NULL,
+  [OtherOverdueSinceDt] [date] NULL,
+  [IntOverdueSinceDt] [date] NULL,
+  [StkStmtDate] [date] NULL,
+  [NCIF_AssetClassAlt_Key] [int] NULL,
+  [balance] [decimal](18, 2) NULL,
+  [PrincipleOutstanding] [decimal](18, 2) NULL
+)
+ON [PRIMARY]
+GO

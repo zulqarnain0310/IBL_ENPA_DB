@@ -1,0 +1,32 @@
+﻿CREATE TABLE [dbo].[DIMPROVISIONPOLICY_mod_20250206] (
+  [Source_System] [varchar](50) NULL,
+  [Source_Alt_Key] [int] NULL,
+  [Scheme_Code] [varchar](50) NULL,
+  [upto_3_months] [decimal](18, 6) NULL,
+  [From_4_months_upto_6_months] [decimal](18, 6) NULL,
+  [From_7_months_upto_9_months] [decimal](18, 6) NULL,
+  [From_10_months_upto_12_months] [decimal](18, 6) NULL,
+  [Doubtful_1] [decimal](18, 6) NULL,
+  [Doubtful_2] [decimal](18, 6) NULL,
+  [Doubtful_3] [decimal](18, 6) NULL,
+  [Loss] [decimal](18, 6) NULL,
+  [Effective_date] [varchar](10) NULL,
+  [AuthorisationStatus] [varchar](10) NULL,
+  [EffectiveFromTimeKey] [int] NULL,
+  [EffectiveToTimeKey] [int] NULL,
+  [CreatedBy] [varchar](50) NULL,
+  [DateCreated] [datetime] NULL,
+  [ModifiedBy] [varchar](50) NULL,
+  [DateModified] [datetime] NULL,
+  [ApprovedBy] [varchar](50) NULL,
+  [DateApproved] [datetime] NULL,
+  [D2Ktimestamp] [timestamp],
+  [ApprovedByFirstLevel] [varchar](50) NULL,
+  [DateApprovedFirstLevel] [datetime] NULL,
+  [ProvisionAlt_key] [int] IDENTITY (577, 1),
+  [ProvisionUnSecured] [decimal](18, 6) NULL,
+  [UploadID] [int] NULL,
+  [IsUpload] [char](1) NULL
+)
+ON [PRIMARY]
+GO

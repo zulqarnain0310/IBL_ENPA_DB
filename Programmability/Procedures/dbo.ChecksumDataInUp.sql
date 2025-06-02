@@ -1,0 +1,304 @@
+﻿SET QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+CREATE PROCEDURE  [dbo].[ChecksumDataInUp]
+	@Timekey INT,
+	@UserLoginID VARCHAR(100),
+	@OperationFlag INT,
+	@MenuId INT, 
+	@Reason VARCHAR (500),
+	@EntityID INT, 
+	@Processing_Type  VARCHAR (20),
+	@Remark VARCHAR (500),
+    @Result		INT=0 OUTPUT 
+	--@Authlevel varchar(5)
+
+AS
+ --DECLARE @Timekey INT=26084,
+--	@UserLoginID VARCHAR(100)='iblfm2',
+--	@OperationFlag INT=1,
+--	@MenuId INT=101, 
+--  @Reason VARCHAR(100)='' 
+--  @Result		INT=0   
+ 
+  --SET @Timekey =(Select TimeKey from SysDataMatrix where CurrentStatus_MOC='C' and MOC_Initialised='Y')  
+
+BEGIN TRY 
+	 		 
+IF (@MenuId=2030)
+	BEGIN
+	 IF (@OperationFlag=1) 
+		BEGIN  
+				print @Reason
+				print @Timekey
+				print @EntityID
+
+				IF EXISTS (select 1 from Dbo.CheckSumData_FF_MOD where EntityID=@EntityID and ISNULL(AuthorisationStatus,'')<>'R' and EffectiveFromTimeKey<=@Timekey and EffectiveToTimeKey>=@Timekey)
+				BEGIN
+							SET @Result=-6
+							RETURN @Result 
+				END
+			ELSE
+			BEGIN
+
+		INSERT INTO Dbo.CheckSumData_FF_MOD
+						( 
+							EntityID
+							,ProcessDate 
+							,Timekey
+							,SourceName
+							,SourceAlt_Key
+							,DataSet
+							,CRISMAC_CheckSum
+							,Source_CheckSum
+							,Start_BAU
+							,Processing_Type
+							,Reason
+							,AuthorisationStatus
+							,EffectiveFromTimeKey
+							,EffectiveToTimeKey
+							,CreatedBy
+							,DateCreated
+							,ModifiedBy
+							,DateModified
+							,ApprovedByFirstLevel
+							,DateApprovedFirstLevel
+							,ApprovedBy
+							,DateApproved  )
+		 
+		SELECT 
+			EntityID
+			,ProcessDate
+			,Timekey
+			,SourceName
+			,SourceAlt_Key
+			,DataSet
+			,CRISMAC_CheckSum
+			,Source_CheckSum 
+			,Start_BAU
+			,@Processing_Type
+			,@Reason
+			 ,'MP'AuthorisationStatus
+			,@Timekey
+			,@Timekey
+			,CreatedBy
+			,DateCreated
+			,@UserLoginID
+			,Getdate()
+			,ApprovedByFirstLevel
+			,DateApprovedFirstLevel
+			,ApprovedBy
+			,DateApproved 
+		FROM dbo.CheckSumData_FF 
+		Where (EffectiveFromTimeKey<=@Timekey and EffectiveToTimeKey>=@Timekey) and EntityID=@EntityID
+				AND Start_BAU='N'
+ 
+			SET @Result=1
+
+	END
+END
+
+	IF @OperationFlag=2
+				BEGIN
+				PRINT 'OP2'
+				PRINT 'TIMEKEY B4 MOD EXP'
+				PRINT @TIMEKEY
+
+				UPDATE Dbo.CheckSumData_FF_mod SET EffectiveToTimeKey=@Timekey-1 where EntityID=@EntityID and ISNULL(AuthorisationStatus,'')='A' AND EffectiveFromTimeKey<=@Timekey AND EffectiveToTimeKey>=@Timekey
+				PRINT 'TIMEKEY MOD EXP'
+				PRINT @TIMEKEY
+					INSERT INTO Dbo.CheckSumData_FF_MOD
+						( 
+							EntityID
+							,ProcessDate 
+							,Timekey
+							,SourceName
+							,SourceAlt_Key
+							,DataSet
+							,CRISMAC_CheckSum
+							,Source_CheckSum
+							,Start_BAU
+							,Processing_Type
+							,Reason
+							,AuthorisationStatus
+							,EffectiveFromTimeKey
+							,EffectiveToTimeKey
+							,CreatedBy
+							,DateCreated
+							,ModifiedBy
+							,DateModified
+							,ApprovedByFirstLevel
+							,DateApprovedFirstLevel
+							,ApprovedBy
+							,DateApproved  )
+		 
+		SELECT 
+			EntityID
+			,ProcessDate
+			,Timekey
+			,SourceName
+			,SourceAlt_Key
+			,DataSet
+			,CRISMAC_CheckSum
+			,Source_CheckSum 
+			,Start_BAU
+			,@Processing_Type
+			,@Reason
+			 ,'MP'AuthorisationStatus
+			,@Timekey
+			,@Timekey
+			,CreatedBy
+			,DateCreated
+			,@UserLoginID
+			,DateCreated
+			,ApprovedByFirstLevel
+			,DateApprovedFirstLevel
+			,ApprovedBy
+			,DateApproved 
+		FROM dbo.CheckSumData_FF 
+		Where (EffectiveFromTimeKey<=@Timekey and EffectiveToTimeKey>=@Timekey) and EntityID=@EntityID
+				AND ISNULL(AuthorisationStatus,'A')='A'
+				AND Start_BAU='N'
+				
+				PRINT 'TIMEKEY MAIN EXP'
+				PRINT @TIMEKEY
+
+
+		UPDATE Dbo.CheckSumData_FF SET EffectiveToTimeKey=@Timekey-1 where EntityID=@EntityID and ISNULL(AuthorisationStatus,'')='A'
+
+		PRINT 'OP2 END'
+				END
+
+
+IF (@OperationFlag=16)	---- FIRST LEVEL AUTHORIZE
+	BEGIN	
+		UPDATE dbo.CheckSumData_FF_mod 
+		SET  AuthorisationStatus	='A'
+			,ApprovedBy =@UserLoginID
+			,DateApproved=GETDATE()
+	
+		WHERE  (EffectiveFromTimeKey<=@Timekey AND EffectiveToTimeKey>=@Timekey) 
+		AND  EntityID=@EntityID 
+		
+			SET @Result=1
+	
+
+--------------------------------------------
+
+	--IF (@OperationFlag=20)----AUTHORIZE
+
+	--BEGIN
+		
+	--	UPDATE dbo.CheckSumData_FF_mod 
+	--		SET AuthorisationStatus	='A'
+	--		,ApprovedBy	=@UserLoginID
+	--		,DateApproved	=GETDATE()
+	--		WHERE  (EffectiveFromTimeKey<=@Timekey and EffectiveToTimeKey>=@Timekey) 
+	--				AND  EntityID=@EntityID
+	--				AND (CreatedBy<>@UserLoginID OR ApprovedByFirstLevel<>@UserLoginID) 
+
+				INSERT INTO Dbo.CheckSumData_FF 
+						( ProcessDate
+							,Timekey
+							,SourceName
+							,SourceAlt_Key
+							,DataSet
+							,CRISMAC_CheckSum
+							,Source_CheckSum
+							,Start_BAU
+							,Processing_Type
+							,Reason
+							,AuthorisationStatus
+							,EffectiveFromTimeKey
+							,EffectiveToTimeKey
+							,CreatedBy
+							,DateCreated
+							,ModifiedBy
+							,DateModified
+							,ApprovedByFirstLevel
+							,DateApprovedFirstLevel
+							,ApprovedBy
+							,DateApproved 
+							)
+		 
+		SELECT ProcessDate
+			,Timekey
+			,SourceName
+			,SourceAlt_Key
+			,DataSet
+			,CRISMAC_CheckSum
+			,Source_CheckSum
+			,Start_BAU
+			,Processing_Type
+			,@Reason
+			,AuthorisationStatus
+			,EffectiveFromTimeKey
+			,EffectiveToTimeKey
+			,CreatedBy
+			,DateCreated
+			,ModifiedBy
+			,DateModified
+			,ApprovedByFirstLevel
+			,DateApprovedFirstLevel
+			,ApprovedBy
+			,DateApproved 
+		FROM dbo.CheckSumData_FF_MOD 
+			Where (EffectiveFromTimeKey<=@Timekey and EffectiveToTimeKey>=@Timekey)
+			 AND EntityID=@EntityID
+			 AND AuthorisationStatus='A'  
+
+		Update  A
+			Set A.EffectiveToTimeKey=A.EffectiveFromTimeKey-1
+					from  Dbo.CheckSumData_FF  A
+					WHERE EntityID=@EntityID 
+
+			Update  A
+			Set A.EffectiveToTimeKey=@Timekey-1
+					from  Dbo.CheckSumData_FF_MOD  A
+					WHERE EntityID=@EntityID 
+
+					
+			SET @Result=1
+		END
+	END
+
+
+	IF (@OperationFlag=17)	---- FIRST LEVEL REJECT
+				BEGIN
+					UPDATE Dbo.CheckSumData_FF_MOD
+						SET AuthorisationStatus	='R'
+							,ApprovedBy	=@UserLoginID
+							,DateApproved	=GETDATE()
+							,Remark=@Remark
+							,EffectiveToTimeKey=EffectiveFromTimeKey-1
+						WHERE (EffectiveFromTimeKey<=@Timekey and EffectiveToTimeKey>=@Timekey)
+							AND EntityID=@EntityID
+							AND AuthorisationStatus='MP'
+							AND CreatedBy<> @UserLoginID 
+
+							
+					SET @Result=1
+				END
+
+	--IF (@OperationFlag=21)----REJECT
+	--			BEGIN
+	--				UPDATE Dbo.CheckSumData_FF_MOD
+	--					SET AuthorisationStatus	='R'
+	--						,ApprovedByFirstLevel =@UserLoginID
+	--						,DateApprovedFirstLevel	=GETDATE()
+	--						,Remark=@Remark
+	--						,EffectiveToTimeKey=EffectiveFromTimeKey-1
+	--				WHERE (EffectiveFromTimeKey<=@Timekey and EffectiveToTimeKey>=@Timekey)
+	--					AND EntityID=@EntityID
+	--					AND AuthorisationStatus in('NP','1A')
+	--					AND (CreatedBy<>@UserLoginID OR ApprovedByFirstLevel<>@UserLoginID)
+	--		SET @Result=1
+												
+	 --END			
+--END   
+END TRY
+		BEGIN CATCH
+				SELECT ERROR_MESSAGE() 
+				--ROLLBACK 
+		END CATCH 
+GO

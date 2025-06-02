@@ -1,0 +1,31 @@
+﻿CREATE TABLE [dbo].[MOC_NPA_IntegrationDetails_MOD] (
+  [EntityKey] [int] IDENTITY,
+  [NCIF_Id] [varchar](20) NULL,
+  [NCIF_Changed] [char](1) NULL,
+  [NCIF_AssetClassAlt_Key] [smallint] NULL,
+  [NCIF_NPA_Date] [date] NULL,
+  [NCIF_EntityID] [int] NOT NULL,
+  [CustomerId] [varchar](20) NULL,
+  [CustomerName] [varchar](80) NULL,
+  [PAN] [varchar](10) MASKED WITH (FUNCTION = 'default()') NULL,
+  [MOC_Status] [char](1) NULL,
+  [MOC_Date] [smalldatetime] NULL,
+  [MOC_ReasonAlt_Key] [varchar](100) NULL,
+  [AuthorisationStatus] [varchar](2) NULL,
+  [EffectiveFromTimeKey] [int] NOT NULL,
+  [EffectiveToTimeKey] [int] NOT NULL,
+  [CreatedBy] [varchar](20) NULL,
+  [DateCreated] [smalldatetime] NULL,
+  [ModifiedBy] [varchar](20) NULL,
+  [DateModified] [smalldatetime] NULL,
+  [ApprovedBy] [varchar](20) NULL,
+  [DateApproved] [smalldatetime] NULL,
+  [MOC_Remark] [varchar](100) NULL,
+  [D2Ktimestamp] [timestamp],
+  [MOC_AssetClassAlt_Key] [smallint] NULL,
+  [MOC_NPA_Date] [date] NULL,
+  [MocAppRemark] [varchar](150) NULL,
+  [UploadFlag] [char](1) NULL
+)
+ON [PRIMARY]
+GO

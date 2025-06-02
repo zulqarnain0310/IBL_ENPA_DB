@@ -1,0 +1,6 @@
+﻿CREATE SEQUENCE [dbo].[Seq_UploadId]
+  AS int
+  INCREMENT BY 1
+  NO CYCLE
+  CACHE 
+GO

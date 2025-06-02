@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[DELETE_FROM_FIN_RF] (
+  [ACCOUNTNO] [varchar](20) NULL
+)
+ON [PRIMARY]
+GO

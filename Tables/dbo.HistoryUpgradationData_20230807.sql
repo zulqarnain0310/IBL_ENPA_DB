@@ -1,0 +1,32 @@
+﻿CREATE TABLE [dbo].[HistoryUpgradationData_20230807] (
+  [AsOnDate] [date] NULL,
+  [SourceName] [varchar](50) NULL,
+  [NCIF] [varchar](100) NULL,
+  [Account] [varchar](20) NULL,
+  [Funded Non Funded Flag] [char](1) NULL,
+  [CIF] [varchar](20) NULL,
+  [Pan] [varchar](10) NULL,
+  [Customer Name] [varchar](500) NULL,
+  [Max DPD on date of upgrade] [int] NULL,
+  [Date of upgrade by D2K] [date] NULL,
+  [Principal OS] [decimal](16, 2) NULL,
+  [Interest OS] [decimal](16, 2) NULL,
+  [Yesterday Max DPD] [int] NULL,
+  [Yesterday Principal OS] [decimal](18, 2) NULL,
+  [Yesterday Interest OS] [decimal](18, 2) NULL,
+  [Asset class prior to upgrade] [varchar](20) NULL,
+  [NCIF NPA Date prior to upgrade] [date] NULL,
+  [Asset class on upgrade date] [varchar](20) NULL,
+  [Scheme Type] [varchar](5) NULL,
+  [Scheme Description] [varchar](100) NULL,
+  [Scheme Code] [varchar](50) NULL,
+  [Segment] [varchar](100) NULL,
+  [Sub Segment] [varchar](100) NULL,
+  [IS_MOC] [char](1) NULL,
+  [Renewal Date] [date] NULL,
+  [Stock statement date] [date] NULL,
+  [DCCO date] [date] NULL,
+  [Project Completion Date] [date] NULL
+)
+ON [PRIMARY]
+GO
