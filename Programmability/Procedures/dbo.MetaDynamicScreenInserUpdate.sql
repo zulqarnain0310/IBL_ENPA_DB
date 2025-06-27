@@ -12,7 +12,7 @@ GO
 -- Create Date:		<30-11-2014>
 -- Loading Master Data for Common Master Screen>
 -- ====================================================================================================================
-ALTER PROCEDURE [dbo].[MetaDynamicScreenInserUpdate]
+CREATE OR ALTER PROCEDURE [dbo].[MetaDynamicScreenInserUpdate]
 	@ColName VARCHAR(MAX) =''
 	,@DataVal  VARCHAR(MAX) =''	
 	,@ColName_DataVal VARCHAR(MAX)=''
