@@ -1,4 +1,9 @@
-﻿SET QUOTED_IDENTIFIER, ANSI_NULLS ON
+USE [IBL_ENPA_DB]
+GO
+/****** Object:  StoredProcedure [dbo].[MetaDynamicScreenInserUpdate]    Script Date: 6/27/2025 10:41:19 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
 GO
 
 
@@ -7,7 +12,7 @@ GO
 -- Create Date:		<30-11-2014>
 -- Loading Master Data for Common Master Screen>
 -- ====================================================================================================================
-CREATE PROCEDURE [dbo].[MetaDynamicScreenInserUpdate]
+ALTER PROCEDURE [dbo].[MetaDynamicScreenInserUpdate]
 	@ColName VARCHAR(MAX) =''
 	,@DataVal  VARCHAR(MAX) =''	
 	,@ColName_DataVal VARCHAR(MAX)=''
@@ -147,7 +152,9 @@ BEGIN
 			
 				SELECT @SQL= ' SELECT (CODE) AS CODE FROM '
 					+' (SELECT  ('+@BaseColumn+') AS CODE FROM '+@TableWithSchema +' where '+ @BaseColumn +'='+@BaseColumnValue
-					+' UNION SELECT  ('+@BaseColumn+') AS CODE FROM '+@TableWithSchema_Mod+' where '+ @BaseColumn +'='+@BaseColumnValue +') A'
+					+' UNION SELECT  ('+@BaseColumn+') AS CODE FROM '+@TableWithSchema_Mod+' where '+ @BaseColumn +'='+@BaseColumnValue+
+						@AuthorisationStatus +'in (''NP'',''MP'',''FM'',''A'',''1A'')'--ADDED ON 20250627 BY ZAIN ON LOCAL TO HANDLE DUPLICATE BASECOLUMN VALUE
+						+') A'
 		
 				INSERT INTO #MasterInfo(EntityKey)
 				EXEC (@SQL)
@@ -1035,4 +1042,3 @@ END
 
 
 
-GO
